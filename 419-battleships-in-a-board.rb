@@ -4,28 +4,34 @@
 # @return {Integer}
 def count_battleships(board)
   count = 0
-  counted_cells = []
+  width = board.first.size
+  height = board.size
+  cells = Array.new(width * height, nil)
     
   board.each_with_index do |line, x|
     line.each_with_index do |cell, y|
+      index = x * width + y
+
+      next unless cells[index].nil?
+
+      flag = false
       if cell == 'X'
-        if counted_cells.include?([x, y])
-          next
-        else
+
           ((y+1)..(line.size-1)).each do |b|
             break if board[x][b] == '.'
-            counted_cells << [x, b]
+            cells[width * x + b] = false
           end
           ((x+1)..(board.size-1)).each do |a|
             break if board[a][y] == '.'
-            counted_cells << [a, y]
+            cells[width * a + y] = false
           end
           
-          count += 1
-        end
+          flag = true
       end
+
+      cells[index] = flag
     end
   end
       
-  count
+  cells.count { |e| e }
 end
