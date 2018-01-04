@@ -6,7 +6,7 @@ def count_battleships(board)
   count = 0
   width = board.first.size
   height = board.size
-  cells = Array.new(width * height, nil)
+  cells = []
     
   board.each_with_index do |line, x|
     line.each_with_index do |cell, y|
